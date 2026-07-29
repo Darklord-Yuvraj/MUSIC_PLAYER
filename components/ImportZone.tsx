@@ -5,6 +5,7 @@ import { Theme } from '@/constants/theme';
 import { useApp } from '@/context/AppContext';
 
 const ACCEPTED = '.mp3,.wav,.flac,.ogg,.m4a,audio/*';
+const FORMATS = ['MP3', 'WAV', 'FLAC', 'OGG', 'M4A'];
 
 export function ImportZone() {
   const { importFiles, importing } = useApp();
@@ -34,7 +35,6 @@ export function ImportZone() {
     }
   }, [handleFiles]);
 
-  // Attach native drag/drop listeners on web (Pressable doesn't support these props)
   useEffect(() => {
     if (Platform.OS !== 'web') return;
     const node = (dropRef.current as any)?._nativeTag as HTMLElement | undefined;
@@ -63,14 +63,14 @@ export function ImportZone() {
     <View style={styles.wrapper}>
       <Pressable ref={dropRef} style={[styles.zone, dragOver && styles.zoneActive]} onPress={openPicker}>
         <View style={styles.iconWrap}>
-          <UploadCloud size={36} color={Theme.colors.cyan} strokeWidth={1.5} />
+          <UploadCloud size={40} color={Theme.colors.cyan} strokeWidth={1.5} />
         </View>
         <Text style={styles.title}>Import Audio Files</Text>
         <Text style={styles.subtitle}>
           Drag & drop MP3, WAV, FLAC, OGG, or M4A — or tap to browse
         </Text>
         <View style={styles.formatsRow}>
-          {['MP3', 'WAV', 'FLAC', 'OGG', 'M4A'].map((f) => (
+          {FORMATS.map((f) => (
             <View key={f} style={styles.formatChip}>
               <Text style={styles.formatText}>{f}</Text>
             </View>
@@ -108,33 +108,55 @@ const styles = StyleSheet.create({
   wrapper: { width: '100%' },
   zone: {
     borderWidth: 2,
-    borderColor: Theme.colors.zinc800,
     borderStyle: 'dashed',
+    borderColor: Theme.colors.zinc700,
     borderRadius: Theme.radius.lg,
-    paddingVertical: 36,
+    paddingVertical: 44,
     paddingHorizontal: 24,
     alignItems: 'center',
-    backgroundColor: Theme.colors.zinc950,
-    gap: 8,
+    backgroundColor: Theme.colors.zinc900 + '20',
+    gap: 10,
   },
   zoneActive: {
     borderColor: Theme.colors.cyan,
     backgroundColor: Theme.colors.cyan + '0a',
   },
-  iconWrap: { marginBottom: 4 },
-  title: { color: Theme.colors.zinc100, fontSize: 17, fontWeight: '700' },
-  subtitle: { color: Theme.colors.zinc500, fontSize: 13, textAlign: 'center' },
-  formatsRow: { flexDirection: 'row', gap: 6, marginTop: 8 },
+  iconWrap: { marginBottom: 6 },
+  title: {
+    color: Theme.colors.zinc100,
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: -0.2,
+  },
+  subtitle: {
+    color: Theme.colors.zinc500,
+    fontSize: 13,
+    textAlign: 'center',
+    lineHeight: 19,
+  },
+  formatsRow: {
+    flexDirection: 'row',
+    gap: 6,
+    marginTop: 10,
+  },
   formatChip: {
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: Theme.radius.sm,
+    borderRadius: 6,
     backgroundColor: Theme.colors.zinc900,
     borderWidth: 1,
     borderColor: Theme.colors.zinc800,
   },
-  formatText: { color: Theme.colors.zinc400, fontSize: 11, fontWeight: '600' },
-  privacyNote: { color: Theme.colors.zinc600, fontSize: 11, marginTop: 4 },
+  formatText: {
+    color: Theme.colors.zinc400,
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  privacyNote: {
+    color: Theme.colors.zinc600,
+    fontSize: 11,
+    marginTop: 8,
+  },
   progressList: { marginTop: 12, gap: 6 },
   progressItem: {
     flexDirection: 'row',

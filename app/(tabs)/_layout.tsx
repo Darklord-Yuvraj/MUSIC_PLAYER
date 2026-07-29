@@ -1,12 +1,8 @@
 import { Tabs } from 'expo-router';
-import { Library, Brain, ListMusic, Settings } from 'lucide-react-native';
+import { BarChart3, Brain, ListMusic, Settings } from 'lucide-react-native';
 import { Theme } from '@/constants/theme';
-import { useApp } from '@/context/AppContext';
 
 export default function TabLayout() {
-  const { player } = useApp();
-  const hasTrack = !!player.currentTrack;
-
   return (
     <Tabs
       screenOptions={{
@@ -16,15 +12,15 @@ export default function TabLayout() {
           borderTopColor: Theme.colors.zinc800,
           borderTopWidth: 1,
           paddingBottom: 4,
-          paddingTop: 6,
-          height: 58,
+          paddingTop: 8,
+          height: 60,
         },
         tabBarActiveTintColor: Theme.colors.cyan,
         tabBarInactiveTintColor: Theme.colors.zinc600,
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: '600',
-          marginTop: 2,
+          marginTop: 3,
         },
       }}
     >
@@ -32,7 +28,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Library',
-          tabBarIcon: ({ size, color }) => <Library size={size} color={color} />,
+          tabBarIcon: ({ size, color }) => <BarChart3 size={size} color={color} />,
         }}
       />
       <Tabs.Screen

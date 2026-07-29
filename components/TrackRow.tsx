@@ -28,7 +28,7 @@ interface TrackRowProps {
 }
 
 function TrackRowBase({ track, index, contextQueue, showAlbum, variant = 'default' }: TrackRowProps) {
-  const { player, ai, removeTrack, playSimilar, smartFlowQueue, patchTrack } = useApp();
+  const { player, ai, removeTrack, smartFlowQueue, patchTrack } = useApp();
   const isCurrent = player.currentTrack?.id === track.id;
   const isProcessing = ai.processingIds.has(track.id);
   const [menuOpen, setMenuOpen] = useState(false);
