@@ -1,0 +1,45 @@
+export const Theme = {
+  colors: {
+    obsidian: '#0d0f12',
+    obsidianDeep: '#080a0d',
+    zinc950: '#18181b',
+    zinc900: '#27272a',
+    zinc800: '#3f3f46',
+    zinc700: '#52525b',
+    zinc600: '#71717a',
+    zinc500: '#a1a1aa',
+    zinc400: '#d4d4d8',
+    zinc300: '#d4d4d8',
+    zinc200: '#e4e4e7',
+    zinc100: '#f4f4f5',
+    cyan: '#22d3ee',
+    cyanGlow: 'rgba(34, 211, 238, 0.35)',
+    violet: '#a78bfa',
+    violetGlow: 'rgba(167, 139, 250, 0.35)',
+    neon: '#34d399',
+    success: '#22c55e',
+    warning: '#f59e0b',
+    error: '#ef4444',
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+    xxl: 48,
+  },
+  radius: {
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 24,
+    pill: 999,
+  },
+  font: {
+    sans: 'Inter',
+    mono: 'Inter',
+  },
+} as const;
+
+export type ThemeColor = keyof typeof Theme.colors;
