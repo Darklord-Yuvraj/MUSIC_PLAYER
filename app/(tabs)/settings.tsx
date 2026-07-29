@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Platform } from 'react-native';
 import { Cpu, Brain, HardDrive, Shield, Zap, Github, Info, Trash2 } from 'lucide-react-native';
 import { Theme } from '@/constants/theme';
 import { useApp } from '@/context/AppContext';
@@ -136,9 +136,27 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Theme.colors.obsidian },
+  container: { flex: 1, backgroundColor: 'transparent' },
   header: { paddingHorizontal: 16, paddingTop: 20, paddingBottom: 16 },
-  title: { color: Theme.colors.zinc100, fontSize: 28, fontWeight: '800' },
+  title: {
+    color: Theme.colors.zinc100,
+    fontSize: 30,
+    fontWeight: '800',
+    letterSpacing: -0.5,
+    ...(Platform.select({
+      web: {
+        backgroundImage: 'linear-gradient(90deg, #a78bfa, #22d3ee, #a78bfa)',
+        backgroundSize: '200% auto',
+        backgroundClip: 'text',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        animationName: 'shimmerText',
+        animationDuration: '4s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear',
+      },
+    }) as any),
+  } as any,
   subtitle: { color: Theme.colors.zinc500, fontSize: 13, marginTop: 2 },
   section: { paddingHorizontal: 16, marginBottom: 24, gap: 10 },
   sectionTitle: { color: Theme.colors.zinc600, fontSize: 12, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 1 },

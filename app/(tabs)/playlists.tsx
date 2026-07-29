@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, Pressable, FlatList, Modal, TextInput,
+  View, Text, StyleSheet, ScrollView, Pressable, FlatList, Modal, TextInput, Platform,
 } from 'react-native';
 import { ListMusic, Plus, Trash2, Play, Clock, Globe2, Sparkles } from 'lucide-react-native';
 import { Theme } from '@/constants/theme';
@@ -343,7 +343,7 @@ function PlaylistDetail({
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Theme.colors.obsidian },
+  container: { flex: 1, backgroundColor: 'transparent' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -352,7 +352,25 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 16,
   },
-  title: { color: Theme.colors.zinc100, fontSize: 28, fontWeight: '800' },
+  title: {
+    color: Theme.colors.zinc100,
+    fontSize: 30,
+    fontWeight: '800',
+    letterSpacing: -0.5,
+    ...(Platform.select({
+      web: {
+        backgroundImage: 'linear-gradient(90deg, #a78bfa, #22d3ee, #a78bfa)',
+        backgroundSize: '200% auto',
+        backgroundClip: 'text',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        animationName: 'shimmerText',
+        animationDuration: '4s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear',
+      },
+    }) as any),
+  } as any,
   subtitle: { color: Theme.colors.zinc500, fontSize: 13, marginTop: 2 },
   addBtn: {
     flexDirection: 'row',

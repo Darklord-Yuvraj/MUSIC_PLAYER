@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, TextInput, Platform } from 'react-native';
 import { Search, Library as LibraryIcon, Sparkles } from 'lucide-react-native';
 import { ImportZone } from '@/components/ImportZone';
 import { TrackList } from '@/components/TrackList';
@@ -97,6 +97,7 @@ export default function LibraryScreen() {
                 style={[styles.filterChip, active && styles.filterChipActive]}
                 onPress={() => setFilter(chip.id)}
               >
+                {active && <View style={styles.filterRing} />}
                 <Text style={[styles.filterText, active && styles.filterTextActive]}>
                   {chip.label}
                 </Text>
@@ -127,22 +128,35 @@ export default function LibraryScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Theme.colors.obsidian },
+  container: { flex: 1, backgroundColor: 'transparent' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     paddingHorizontal: 20,
-    paddingTop: 24,
+    paddingTop: 28,
     paddingBottom: 16,
   },
   headerLeft: { gap: 4 },
   title: {
-    color: Theme.colors.zinc100,
-    fontSize: 30,
+    fontSize: 34,
     fontWeight: '800',
     letterSpacing: -0.5,
-  },
+    color: Theme.colors.zinc100,
+    ...(Platform.select({
+      web: {
+        backgroundImage: 'linear-gradient(90deg, #a78bfa, #22d3ee, #a78bfa)',
+        backgroundSize: '200% auto',
+        backgroundClip: 'text',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        animationName: 'shimmerText',
+        animationDuration: '4s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear',
+      },
+    }) as any),
+  } as any,
   subtitle: { color: Theme.colors.zinc500, fontSize: 13 },
   smartFlowBtn: {
     flexDirection: 'row',
@@ -154,7 +168,19 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.violet + '12',
     borderWidth: 1,
     borderColor: Theme.colors.violet + '50',
-  },
+    ...(Platform.select({
+      web: {
+        transitionProperty: 'box-shadow, border-color, background-color',
+        transitionDuration: '400ms',
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        animationName: 'starPulse',
+        animationDuration: '3s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'ease-in-out',
+        cursor: 'pointer',
+      },
+    }) as any),
+  } as any,
   smartFlowBtnText: { color: Theme.colors.violet, fontSize: 13, fontWeight: '600' },
   searchRow: { paddingHorizontal: 20, marginBottom: 14 },
   searchWrap: {
@@ -164,32 +190,58 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 11,
     borderRadius: Theme.radius.md,
-    backgroundColor: Theme.colors.zinc900 + '80',
+    backgroundColor: Theme.colors.zinc900 + '60',
     borderWidth: 1,
     borderColor: Theme.colors.zinc800,
+    ...(Platform.select({
+      web: {
+        transitionProperty: 'border-color, box-shadow',
+        transitionDuration: '300ms',
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+    }) as any),
   },
-  searchInput: {
-    flex: 1,
-    color: Theme.colors.zinc100,
-    fontSize: 14,
-    padding: 0,
-  },
+  searchInput: { flex: 1, color: Theme.colors.zinc100, fontSize: 14, padding: 0 },
   clearBtn: { padding: 4 },
   clearText: { color: Theme.colors.zinc600, fontSize: 12 },
   filterScroll: { marginBottom: 10 },
   filterRow: { flexDirection: 'row', gap: 8, paddingHorizontal: 20, paddingVertical: 2 },
   filterChip: {
+    position: 'relative',
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: Theme.radius.pill,
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: Theme.colors.zinc800,
+    ...(Platform.select({
+      web: {
+        transitionProperty: 'border-color, background-color',
+        transitionDuration: '300ms',
+        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        cursor: 'pointer',
+      },
+    }) as any),
   },
   filterChipActive: {
-    borderColor: Theme.colors.cyan,
+    borderColor: 'transparent',
     backgroundColor: Theme.colors.cyan + '10',
   },
+  filterRing: {
+    position: 'absolute',
+    top: -1, left: -1, right: -1, bottom: -1,
+    borderRadius: Theme.radius.pill,
+    borderWidth: 1.5,
+    borderColor: Theme.colors.cyan,
+    ...(Platform.select({
+      web: {
+        animationName: 'filterRingSlide',
+        animationDuration: '250ms',
+        animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        animationFillMode: 'forwards',
+      },
+    }) as any),
+  } as any,
   filterText: { color: Theme.colors.zinc500, fontSize: 12, fontWeight: '600' },
   filterTextActive: { color: Theme.colors.cyan },
   importSection: { paddingHorizontal: 20, marginBottom: 20 },

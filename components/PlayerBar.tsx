@@ -154,12 +154,15 @@ export function PlayerBar() {
 const styles = StyleSheet.create({
   bar: {
     position: 'relative',
-    backgroundColor: Theme.colors.obsidianDeep,
+    backgroundColor: Theme.colors.obsidianDeep + 'f0',
     borderTopWidth: 1,
     borderTopColor: Theme.colors.zinc800,
     paddingHorizontal: 16,
     paddingVertical: 10,
     overflow: 'hidden',
+    ...(Platform.select({
+      web: { backdropFilter: 'blur(12px)' },
+    }) as any),
   },
   glowLeft: {
     position: 'absolute',
